@@ -1,15 +1,13 @@
-import $ from "jquery";
-import lodash from "lodash";
-import "./body.css";
+import $ from 'jquery';
+import "./body.css"
+const _ = require('lodash');
 
-const $button = $("<button>Click here to get started</button>");
-$("body").append($button);
-$("body").append('<p id="count"></p>');
+$("<button>Click here to get started</button>").appendTo($("body"));
+$("<p id='count'></p>").appendTo("body");
 
-let count = 0;
-const updateCounter = () => {
-  count++;
-  $("#count").text(`${count} clicks on the button`);
-};
-
-$button.on("click", lodash.debounce(updateCounter, 500));
+let counter = 0;
+const debouncedCounter = _.debounce(() => {
+    counter++;
+    $("#count").text(`${counter} clicks on the button`);
+});
+$('button').on('click', debouncedCounter);
