@@ -1,60 +1,46 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const path = require('path');
 
 module.exports = {
-  entry: {
-    header: './modules/header/header.js',
-    body: './modules/body/body.js',
-    footer: './modules/footer/footer.js'
-  },
-  output: {
-    filename: '[name].bundle.js',
+	entry: {
+		all: ["./modules/header/header.js", "./modules/body/body.js", "./modules/footer/footer.js"],
+	  },  output: {
     path: path.resolve(__dirname, 'public'),
-    clean: true,
-  },
+	filename: '[name].bundle.js',
+},
+plugins: [
+	new CleanWebpackPlugin(),
+	new HtmlWebpackPlugin({
+	title: 'Holberton Dashboard',
+    }),
+	],
+	devtool: 'inline-source-map',
+	devServer: {
+		contentBase: './public',
+		port: 8564,
+	},
 
-  optimization: {
-    runtimeChunk: 'single',
-  },
-
-  plugins:
-   [
-    new HtmlWebpackPlugin(),
-    new CleanWebpackPlugin(),
-  ],
-
-  
-  devtool: "inline-source-map",
-
+  mode: 'development',
   module: {
-    rules: [
-			{
-        test: /\.css$/i,
-        use: ['style-loader','css-loader']
-      },
-
-      {
-        test: /\.(png|svg|jpe?g|gif)$/i,
-        type: 'asset/resource',
-      },
-    ],
-  },
-  
-  mode: "development",
-
-  performance: {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
+	rules: [
+		{
+			test: /\.css$/i,
+			use: ["css-loader", "style-loader"],
+		},
+		{
+			test: /\.(gif|png|jpe?g|svg)$/i,
+			use: [
+				"file-loader",
+				{
+					loader: "image-webpack-loader",
+					options: {
+							bypassingOnDebug: true,
+							disable: true,
+					},
+				},
+			],
+		},
+	],
 },
-
-devServer: {
-  static: {
-    directory: path.join(__dirname, 'public'),
-  },
-  compress: true,
-  port: 8564,
-},
-
 };
