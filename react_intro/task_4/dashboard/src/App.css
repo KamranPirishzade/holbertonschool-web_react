@@ -1,49 +1,28 @@
-:root {
-  --holberton-red: #e1484c;
-}
-
-body {
-  max-width: 90%;
-  margin: 0 auto;
-}
-
-div {
-  padding: 2px 8px;
-}
-
-.App {
-  position: relative;
-  min-height: 100vh;
-}
-
 .App-header {
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  border-bottom: 3px solid var(--holberton-red);
+  align-items: center;
+  border-bottom: solid red;
+}
+
+.App-header img {
+  width: 15rem;
 }
 
 .App-header h1 {
-  margin: auto auto auto 0;
-  color: var(--holberton-red);
+  color: red;
 }
 
 .App-body {
-  padding: 36px 24px;
+  min-height: 100vh;
+  margin: 0 5rem 0 5rem;
+  font-size: x-large;
 }
 
-.App-body input {
-  margin: 0 16px 0 8px;
+.App-footer{
+  border-top: solid red;
 }
 
-.App-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-.App-footer p {
+.App-footer p{
   text-align: center;
-  border-top: 3px solid var(--holberton-red);
-  padding: 16px 0;
+  font-size: larger;
 }

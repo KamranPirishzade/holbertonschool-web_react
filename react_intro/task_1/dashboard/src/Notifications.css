@@ -1,4 +1,8 @@
-.Notifications {
-	border: 3px solid var(--holberton-red);
-	padding: 6px 12px;
-}
+/* task_1/dashboard/src/Notifications.css */
+
+.notifications {
+    border: 2px dotted #e1003c;
+    padding: 10px;
+    margin: 10px;
+  }
+  

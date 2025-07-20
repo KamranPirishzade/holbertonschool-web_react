@@ -1,49 +1,27 @@
-:root {
-  --holberton-red: #e1484c;
-}
-
-body {
-  max-width: 90%;
-  margin: 0 auto;
-}
-
-div {
-  padding: 2px 8px;
-}
-
-.App {
-  position: relative;
-  min-height: 100vh;
-}
-
 .App-header {
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  border-bottom: 3px solid var(--holberton-red);
+  border-bottom: 3px solid #e1003c;
+}
+.App-header img {
+  height: 200px;
+  width: 200px;
 }
 
 .App-header h1 {
-  margin: auto auto auto 0;
-  color: var(--holberton-red);
+  align-self: center;
+  font-family: Arial;
+  font-weight: bold;
+  color: #e1003c;
 }
 
 .App-body {
-  padding: 36px 24px;
-}
-
-.App-body input {
-  margin: 0 16px 0 8px;
+  height: 500px;
+  margin: 30px 15px;
 }
 
 .App-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-.App-footer p {
-  text-align: center;
-  border-top: 3px solid var(--holberton-red);
-  padding: 16px 0;
+  display: flex;
+  justify-content: center;
+  border-top: 3px solid #e1003c;
+  font-style: italic;
 }

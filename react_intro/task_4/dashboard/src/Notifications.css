@@ -1,14 +1,14 @@
 .Notifications {
-	border: 2px dotted var(--holberton-red);
-	padding: 6px 12px;
-	position: relative;
-	margin-top: 12px;
+    border: dashed red;
+    padding: 2rem;
 }
 
 li[data-priority="default"] {
-	color: blue;
+    color: blue;
+    font-size: larger;
 }
 
 li[data-priority="urgent"] {
-	color: red;
+    color: red;
+    font-size: larger;
 }

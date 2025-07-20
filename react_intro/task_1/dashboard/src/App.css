@@ -1,45 +1,31 @@
-:root {
-  --holberton-red: #e1484c;
-}
-
-body {
-  max-width: 90%;
-  margin: 0 auto;
-}
-
-div {
-  padding: 2px 8px;
-}
-
-.App {
-  position: relative;
-  min-height: 100vh;
-}
-
 .App-header {
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  border-bottom: 3px solid var(--holberton-red);
+  align-items: center;
+  border-bottom: 3px solid #e1003c;
+  padding: 20px;
+}
+
+.App-header img {
+  height: 200px;
+  width: auto;
 }
 
 .App-header h1 {
-  margin: auto auto auto 0;
-  color: var(--holberton-red);
+  color: #e1003c;
+  font-size: 2rem;
+  margin-left: 20px;
 }
 
-.App-body p {
-  margin: 48px 0 0 32px;
+.App-body {
+  padding: 30px;
+  min-height: 300px;
+  border-bottom: 3px solid #e1003c;
+  font-size: 1.1rem;
 }
 
 .App-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-.App-footer p {
   text-align: center;
-  border-top: 3px solid var(--holberton-red);
-  padding: 16px 0;
+  font-style: italic;
+  padding: 10px;
+  border-top: none;
 }
