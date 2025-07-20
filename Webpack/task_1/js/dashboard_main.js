@@ -1,18 +1,23 @@
-
 import $ from 'jquery';
 import _ from 'lodash';
 
-$('body').append('<p>Holberton Dashboard</p>');
-$('body').append('<p>Dashboard data for the students</p>');
-$('body').append('<button>Click here to get started</button>');
-$('body').append('<p id="count"></p>');
-$('body').append('<p>Copyright - Holberton School</p>');
-
-let conunt = 0;
+let count = 0;
 
 function updateCounter() {
-  count++;
-  $("#count").html(`${count} clicks on the button`);
-};
+  count += 1;
+  return count;
+}
 
-$('button').on('click', _.debounce(updateCounter, 500));
+$(function () {
+  $('body').append('<p>Holberton Dashboard</p>');
+  $('body').append('<p>Dashboard data for the students</p>');
+  $('body').append('<button>Click here to get started</button>');
+  $('body').append('<p id="count"></p>');
+  $('body').append('<p>Copyright - Holberton School</p>');
+
+  let debouncedFunc = _.debounce(() => {
+    // updateCounter() increments the global count and returns the new value
+    $('#count').text(`${updateCounter()} clicks on the button`);
+  }, 500);
+  $('button').on('click', debouncedFunc);
+});
