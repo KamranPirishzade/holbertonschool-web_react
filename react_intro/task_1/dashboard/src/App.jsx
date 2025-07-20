@@ -1,10 +1,8 @@
-// task_1/dashboard/src/App.jsx
-
 import React from 'react';
 import './App.css';
-import logo from './holberton-logo.jpg';
-import { getCurrentYear, getFooterCopy } from './utils';
 import Notifications from './Notifications';
+import { getCurrentYear, getFooterCopy } from './utils';
+// import holbertonLogo from './assets/holberton-logo.jpg';
 
 function App() {
   return (
@@ -12,22 +10,30 @@ function App() {
       <div className="root-notifications">
         <Notifications />
       </div>
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} alt="holberton logo" />
-          <h1>School dashboard</h1>
+      <div className="App-header">
+        <div style={{
+          width: '200px', 
+          height: '200px', 
+          background: '#e1003c', 
+          color: 'white', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          marginRight: '1rem',
+          fontWeight: 'bold'
+        }}>
+          HOLBERTON
         </div>
-        <div className="App-body">
-          <p>Login to access the full dashboard</p>
-        </div>
-        <div className="App-footer">
-          <p>
-            Copyright {getCurrentYear()} {getFooterCopy(false)}
-          </p>
-        </div>
+        <h1>School dashboard</h1>
+      </div>
+      <div className="App-body">
+        <p>Login to access the full dashboard</p>
+      </div>
+      <div className="App-footer">
+        <p>Copyright {getCurrentYear()} - {getFooterCopy(false)}</p>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

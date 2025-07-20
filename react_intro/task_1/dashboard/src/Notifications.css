@@ -1,8 +1,10 @@
-/* task_1/dashboard/src/Notifications.css */
-
 .notifications {
-    border: 2px dotted #e1003c;
-    padding: 10px;
-    margin: 10px;
-  }
-  
+  border: 2px dashed #e1003c;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.notifications p {
+  margin: 0;
+  font-style: italic;
+}

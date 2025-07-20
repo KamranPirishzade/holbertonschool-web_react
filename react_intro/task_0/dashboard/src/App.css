@@ -2,30 +2,28 @@
   display: flex;
   align-items: center;
   border-bottom: 3px solid #e1003c;
-  padding: 20px;
+  padding: 1rem;
 }
 
 .App-header img {
   height: 200px;
-  width: auto;
+  width: 200px;
+  margin-right: 1rem;
 }
 
 .App-header h1 {
-  color: #e1003c;
-  font-size: 2rem;
-  margin-left: 20px;
+  color: #e1003c;  /* Bu rəng tələb edilir */
+  margin: 0;
 }
 
 .App-body {
-  padding: 30px;
+  padding: 2rem 1rem;
   min-height: 300px;
-  border-bottom: 3px solid #e1003c;
-  font-size: 1.1rem;
 }
 
 .App-footer {
+  border-top: 3px solid #e1003c;
+  padding: 1rem;
   text-align: center;
   font-style: italic;
-  padding: 10px;
-  border-top: none;
 }

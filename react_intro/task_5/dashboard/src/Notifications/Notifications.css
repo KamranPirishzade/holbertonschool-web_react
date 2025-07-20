@@ -1,21 +1,28 @@
-/* task_2/dashboard/src/Notifications.css */
-
 .notifications {
-  border: 2px dashed #e1484c;
-  padding: 20px;
-  margin: 20px;
+  border: 2px dashed #e1003c;
+  padding: 1rem;
+  margin-bottom: 1rem;
   position: relative;
 }
 
 .notifications p {
-  font-weight: bold;
-  margin-bottom: 10px;
+  margin: 0 0 1rem 0;
+  font-style: italic;
 }
 
-.notifications li[data-priority='default'] {
+.notifications ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.notifications li {
+  margin-bottom: 0.5rem;
+}
+
+.notifications li[data-priority="default"] {
   color: blue;
 }
 
-.notifications li[data-priority='urgent'] {
+.notifications li[data-priority="urgent"] {
   color: red;
 }

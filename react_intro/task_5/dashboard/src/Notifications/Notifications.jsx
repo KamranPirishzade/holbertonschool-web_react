@@ -1,39 +1,39 @@
-// task_2/dashboard/src/Notifications.jsx
-
 import React from 'react';
 import './Notifications.css';
-import closeIcon from '../assets/close-button.png';
 import { getLatestNotification } from '../utils/utils';
+import closeIcon from '../assets/close-button.png';
 
 function Notifications() {
-  const handleClick = () => {
+  const handleCloseClick = () => {
     console.log('Close button has been clicked');
   };
 
   return (
     <div className="notifications">
-      <button
+      <button 
         style={{
           position: 'absolute',
-          top: 10,
-          right: 10,
+          top: '10px',
+          right: '10px',
           background: 'transparent',
           border: 'none',
           cursor: 'pointer'
         }}
         aria-label="Close"
-        onClick={handleClick}
+        onClick={handleCloseClick}
       >
-        <img src={closeIcon} alt="close" style={{ height: '10px', width: '10px' }} />
+        <img src={closeIcon} alt="close" style={{ width: '16px', height: '16px' }} />
       </button>
+      
       <p>Here is the list of notifications</p>
+      
       <ul>
         <li data-priority="default">New course available</li>
         <li data-priority="urgent">New resume available</li>
-        <li
+        <li 
           data-priority="urgent"
           dangerouslySetInnerHTML={{ __html: getLatestNotification() }}
-        />
+        ></li>
       </ul>
     </div>
   );
