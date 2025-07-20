@@ -1,45 +1,37 @@
-import "./App.css";
-import Notifications from "../Notifications/Notifications.jsx";
-import Header from "../Header/Header.jsx";
-import Footer from "../Footer/Footer.jsx";
-import Login from "../Login/Login.jsx";
-import { Fragment } from "react";
-import { getLatestNotification } from "../utils/utils.js";
-import { v4 as uuidv4 } from "uuid";
-import CourseList from "../CourseList/CourseList.jsx";
-import PropTypes from "prop-types";
+import React from 'react';
+import './App.css';
+import Notifications from '../Notifications/Notifications';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Login from '../Login/Login';
+import CourseList from '../CourseList/CourseList';
+import { getLatestNotification } from '../utils/utils';
 
-function App({ isLoggedIn = false }) {
-  let notificationsList = [
-    { id: uuidv4(), type: "default", value: "New course available" },
-    { id: uuidv4(), type: "urgent", value: "New resume available" },
-    { id: uuidv4(), type: "urgent", HTML: getLatestNotification() },
+function App() {
+  const isLoggedIn = false; // change to true for testing CourseList display
+
+  const notificationsList = [
+    { id: 1, type: 'urgent', value: 'New course available' },
+    { id: 2, type: 'urgent', value: 'New resume available' },
+    { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
   ];
-  let coursesList = [
-    { id: uuidv4(), name: "ES6", credit: 60 },
-    { id: uuidv4(), name: "Webpack", credit: 20 },
-    { id: uuidv4(), name: "React", credit: 40 },
+
+  const coursesList = [
+    { id: 1, name: 'ES6', credit: 60 },
+    { id: 2, name: 'Webpack', credit: 20 },
+    { id: 3, name: 'React', credit: 40 },
   ];
+
   return (
-    <Fragment>
-      <div className="root-notifications">
-        <Notifications notifications={notificationsList} displayDrawer={true} />
+    <React.Fragment>
+      <div className='root-notifications'>
+        <Notifications notifications={notificationsList} />
       </div>
       <Header />
-      <div className="mainSection">
-        {isLoggedIn == true ? (
-          <CourseList courses={coursesList}></CourseList>
-        ) : (
-          <Login />
-        )}
-      </div>
+      {isLoggedIn ? <CourseList courses={coursesList} /> : <Login />}
       <Footer />
-    </Fragment>
+    </React.Fragment>
   );
 }
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool,
-};
 
 export default App;

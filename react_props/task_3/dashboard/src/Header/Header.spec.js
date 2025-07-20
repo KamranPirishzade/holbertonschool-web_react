@@ -1,20 +1,14 @@
-import {render, screen} from '@testing-library/react'
-import Header from './Header.jsx'
+import { render, screen } from "@testing-library/react";
+import Header from "./Header";
 
-describe("Header component", () => {
-    it("is the header rendered", () => {
-        render(<Header />)
-        const h1elem = screen.getByRole("heading")
-        expect(h1elem).toBeInTheDocument()
-    })
-    it("is the image rendred", () => {
-        render(<Header />)
-        const img = screen.getByAltText("holberton logo")
-        expect(img).toBeInTheDocument()
-    })
-    it("checking if the h1 is with the correct text", () => {
-        render(<Header />)
-        const h1elem = screen.getByRole("heading")
-        expect(h1elem.textContent).toBe("School dashboard")
-    })
-})
+test('h1 element with the text School Dashboard is rendered', () => {
+  render(<Header />);
+  const heading = screen.getByRole('heading', { name: /School Dashboard/i });
+  expect(heading).toBeInTheDocument();
+});
+
+test('an img element is rendered', () => {
+  render(<Header />);
+  const image = screen.getByAltText(/holberton logo/i);
+  expect(image).toBeInTheDocument();
+});

@@ -1,8 +1,7 @@
-import React from 'react';
-import './App.css';
-import Notifications from './Notifications';
-import { getCurrentYear, getFooterCopy } from './utils';
-// import holbertonLogo from './assets/holberton-logo.jpg';
+import "./App.css";
+import logo from "./assets/holberton-logo.jpg";
+import { getCurrentYear, getFooterCopy } from "./utils";  // <= il manque ça chez toi
+import Notifications from "./Notifications";               // <= il manque ça aussi
 
 function App() {
   return (
@@ -11,19 +10,7 @@ function App() {
         <Notifications />
       </div>
       <div className="App-header">
-        <div style={{
-          width: '200px', 
-          height: '200px', 
-          background: '#e1003c', 
-          color: 'white', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          marginRight: '1rem',
-          fontWeight: 'bold'
-        }}>
-          HOLBERTON
-        </div>
+        <img src={logo} alt="holberton logo" />
         <h1>School dashboard</h1>
       </div>
       <div className="App-body">
@@ -33,7 +20,7 @@ function App() {
         <p>Copyright {getCurrentYear()} - {getFooterCopy(false)}</p>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

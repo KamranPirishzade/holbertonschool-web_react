@@ -1,17 +1,21 @@
-
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
+import { getCurrentYear, getFooterCopy } from "../utils/utils";
 import Footer from "./Footer";
-import { getCurrentYear } from "../utils/utils";
 
-describe("Footer Component", () => {
-  it("p element renders the string Copyright {the current year} - Holberton School, whenever the getFooterCopy() isIndex argument is set to true", () => {
-    render(<Footer isIndex={true} />);
-    
-    const expectedText = `Copyright ${getCurrentYear()} - Holberton School`;
-    const paragraph = screen.getByText(expectedText);
+test('the text content within the 2 p elements in the app-body and app-footer divs matches', () => {
+  render(<Footer />);
+  const divfooter = screen.getByText(/Copyright 2025 - holberton School/i);
 
-    expect(paragraph).toBeInTheDocument();
-  });
+  expect(divfooter).toBeInTheDocument();
 });
 
+test('renders correct footer content when isIndex is true', () => {
+  render(<Footer />);
+
+  const year = getCurrentYear();
+  const copy = getFooterCopy(true);
+  const expectedText = `Copyright ${year} - ${copy}`;
+
+  const footerText = screen.getByText(expectedText, { exact: false });
+  expect(footerText).toBeInTheDocument();
+});

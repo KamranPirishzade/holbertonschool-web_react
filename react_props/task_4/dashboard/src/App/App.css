@@ -1,10 +1,28 @@
-.App-logo {
-  height: 30vmin;
+.App-header {
+  display: flex;
+  align-items: center;
+  color: #e1003c;
+  padding: 10px;
+  border-bottom: 3px solid #e1003c;
+}
+
+.App-header img {
+  height: 200px;
+  margin-right: 20px;
 }
 
 .App-body {
-  height: 20rem;
-  border-bottom: 2px solid #ec0047;
-  padding: 30px 70px;
-  font: 1.2rem "Fira Sans", sans-serif;
+  padding: 40px;
 }
+
+.App-footer {
+  border-top: 3px solid #e1003c;
+  text-align: center;
+  font-style: italic;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: white;
+}
+

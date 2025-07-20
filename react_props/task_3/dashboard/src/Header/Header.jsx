@@ -1,15 +1,13 @@
+import './Header.css';
+import holbertonLogo from '../assets/holberton-logo.jpg';
 
-import "./Header.css"
-
-function Header() {
+export default function Header() {
     return (
-        <>
-            <div className='App-header' alt="holberton logo">
-            <img src="src/assets/holberton-logo.jpg" alt="holberton logo" ></img>
-            <h1 role="heading">School dashboard</h1>
-            </div>
-        </>
+    <>
+        <div className='App-header'>
+            <img src={holbertonLogo} className="logo" alt="holberton logo" />
+            <h1 style={{ color: '#e1003c' }}>School dashboard</h1>
+        </div>
+    </>
     )
 }
-
-export default Header

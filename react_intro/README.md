@@ -1,12 +1,13 @@
-# Holberton School - Web React
+# 0x02. React intro
 
-This repository contains React projects and exercises from Holberton School.
+## Learning Objectives
+* How to create a basic Javascript application using React
+* How to use the package create-react-app to start developing quickly with React
+* What JSX is and how to use it
+* How to use the React Developer Tools to debug your code
+* How to use Enzyme’s Shadow rendering to test your application
+* How to use React with Webpack & Babel
 
-## Description
-
-This project introduces the fundamentals of React development, including:
-- Setting up a React application with Vite
-- Creating React components
-- Writing and running tests with React Testing Library
-- Implementing forms and user interactions
-- Deploying React applications to GitHub Pages
+## Requirements
+* Node 12.x.x
+* NPM 6.x.x

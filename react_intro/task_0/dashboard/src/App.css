@@ -1,29 +1,45 @@
-.App-header {
-  display: flex;
-  align-items: center;
-  border-bottom: 3px solid #e1003c;
-  padding: 1rem;
+:root {
+  --holberton-red: #e1484c;
 }
 
-.App-header img {
-  height: 200px;
-  width: 200px;
-  margin-right: 1rem;
+body {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+div {
+  padding: 2px 8px;
+}
+
+.App {
+  position: relative;
+  min-height: 100vh;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  border-bottom: 3px solid var(--holberton-red);
 }
 
 .App-header h1 {
-  color: #e1003c;  /* Bu rəng tələb edilir */
-  margin: 0;
+  margin: auto auto auto 0;
+  color: var(--holberton-red);
 }
 
-.App-body {
-  padding: 2rem 1rem;
-  min-height: 300px;
+.App-body p {
+  margin: 48px 0 0 32px;
 }
 
 .App-footer {
-  border-top: 3px solid #e1003c;
-  padding: 1rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.App-footer p {
   text-align: center;
-  font-style: italic;
+  border-top: 3px solid var(--holberton-red);
+  padding: 16px 0;
 }

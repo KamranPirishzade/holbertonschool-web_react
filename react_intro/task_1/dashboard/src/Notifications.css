@@ -1,10 +1,4 @@
-.notifications {
-  border: 2px dashed #e1003c;
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.notifications p {
-  margin: 0;
-  font-style: italic;
+.Notifications {
+	border: 3px solid var(--holberton-red);
+	padding: 6px 12px;
 }

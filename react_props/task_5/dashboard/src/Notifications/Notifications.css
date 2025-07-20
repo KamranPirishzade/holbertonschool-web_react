@@ -1,53 +1,51 @@
+/* Conteneur toujours visible */
+.notifications-title {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* Conteneur des notifications, visible seulement si displayDrawer est true */
 .notifications {
-  padding-right: 0px;
-  margin-bottom: 10px;
-  border: 3px dotted;
-  border-color: #e1003c;
-  display: inline-block;
-  position: absolute;
-  left: 73vw;
-  top: 4vh;
-  width: 400px;
-  height: 100px;
+  border: 2px dashed red;
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+  background-color: #fff;
 }
 
-[aria-label="Close"] img {
-  height: 10px;
-  width: 10px;
-}
-
+/* Paragraphe descriptif */
 .notifications p {
-  display: inline-block;
-  width: 97%;
-  margin: 0px;
-  padding-top: 5px;
-  padding-left: 5px;
+  margin: 0 0 10px 0;
 }
 
-[aria-label="Close"] {
+/* Liste */
+.notifications ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Notification par priorité */
+.notifications li[data-notification-type="default"] {
+  color: blue;
+}
+
+.notifications li[data-notification-type="urgent"] {
+  color: red;
+}
+
+/* Bouton de fermeture */
+.notifications button {
+  background: none;
   border: none;
-  background-color: white;
   position: absolute;
-  right: 5px;
-  top: 2px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
 
-[data-priority="default"] {
-  color: blue;
-}
-
-[data-priority="urgent"] {
-  color: red;
-}
-
-[data-priority="urgent"] + li {
-  color: red;
-}
-
-[data-notification-type="default"] {
-  color: blue;
-}
-
-[data-notification-type="urgent"] {
-  color: red;
+.notifications button img {
+  width: 10px;
+  height: 10px;
 }

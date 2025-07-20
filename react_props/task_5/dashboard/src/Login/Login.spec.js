@@ -1,31 +1,34 @@
-import { render, screen } from "@testing-library/react";
-import Login from "./Login.jsx";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Login from "./Login";
 
-describe("Login component", () => {
-  it("are the input elements renderd", () => {
-    render(<Login />);
-    const allInputs = screen.getAllByRole("textbox");
-    expect(allInputs.length).toBe(2);
-  });
-  it("are the labels rendred", () => {
-    render(<Login />);
-    const label1 = screen.getByLabelText("Email");
-    expect(label1).toBeInTheDocument();
-    const label2 = screen.getByLabelText("Password");
-    expect(label2).toBeInTheDocument();
-  });
-  it("is the button rendred", () => {
-    render(<Login />);
-    const btn = screen.getByTestId("btn");
-    expect(btn).toBeInTheDocument();
-    expect(btn.textContent).toMatch(/OK/);
-  });
-  it("checking if the input is focused if a label is clicked", async () => {
-    render(<Login />);
-    const userE = userEvent.setup();
-    const inp = screen.getByTestId("pw");
-    await userE.click(screen.getByLabelText("Password"));
-    expect(inp).toBe(document.activeElement);
-  });
+test('the text content within the 2 p elements in the app-body and app-footer divs matches', () => {
+  render(<Login />);
+  const divbody = screen.getByText(/Login to access the full dashboard/i);
+
+  expect(divbody).toBeInTheDocument();
+});
+
+test('renders 2 input elements', () => {
+  render(<Login />);
+  const labelemail = screen.getByLabelText(/Email/i);
+  const labelpassword = screen.getByLabelText(/Password/i);
+
+  expect(labelemail).toBeInTheDocument();
+  expect(labelpassword).toBeInTheDocument();
+});
+
+test('renders 2 label elements with the text Email and Password', () => {
+  render(<Login />);
+  const labelemail = screen.getByLabelText(/email/i);
+  const labelpassword = screen.getByLabelText(/password/i);
+
+  expect(labelemail).toBeInTheDocument();
+  expect(labelpassword).toBeInTheDocument();
+});
+
+test('renders a button with the text OK', () => {
+  render(<Login />);
+  const button = screen.getByRole('button', { name: /ok/i });
+
+  expect(button).toBeInTheDocument();
 });

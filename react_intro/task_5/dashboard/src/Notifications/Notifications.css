@@ -1,28 +1,14 @@
-.notifications {
-  border: 2px dashed #e1003c;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  position: relative;
+.Notifications {
+	border: 2px dotted var(--holberton-red);
+	padding: 6px 12px;
+	position: relative;
+	margin-top: 12px;
 }
 
-.notifications p {
-  margin: 0 0 1rem 0;
-  font-style: italic;
+li[data-priority="default"] {
+	color: blue;
 }
 
-.notifications ul {
-  margin: 0;
-  padding-left: 1.5rem;
-}
-
-.notifications li {
-  margin-bottom: 0.5rem;
-}
-
-.notifications li[data-priority="default"] {
-  color: blue;
-}
-
-.notifications li[data-priority="urgent"] {
-  color: red;
+li[data-priority="urgent"] {
+	color: red;
 }

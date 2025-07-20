@@ -1,44 +1,41 @@
-import Notifications from './Notifications.jsx'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { v4 as uuidv4 } from 'uuid'
+import { render, screen, fireEvent } from "@testing-library/react";
+import Notifications from "./Notifications";
 
+describe('Notifications', () => {
+  const mockNotifications = [
+    { id: 1, type: 'default', value: 'New course available' },
+    { id: 2, type: 'urgent', value: 'New resume available' },
+    { id: 3, type: 'urgent', html: { __html: '<strong>Urgent requirement</strong> - complete by EOD' } },
+  ];
 
-test("testing if the paragraph text is correct", () => {
-    render(<Notifications />)
-    const p = screen.getByText(/Here is the list of notifications/i)
-    expect(p).toBeInTheDocument()
-})
+  test('Check the existence of the notifications title Here is the list of notifications', () => {
+    render(<Notifications listNotifications={mockNotifications} />);
+    const notiftitle = screen.getByText(/Here is the list of notifications/i);
 
-test("checking the existance of the button element", () => {
-    render(<Notifications />)
-    const btn = screen.getByRole("button")
-    expect(btn).toBeInTheDocument()
-})
+    expect(notiftitle).toBeInTheDocument();
+  })
 
+  test('Check the existence of the button element in the notifications', () => {
+    render(<Notifications listNotifications={mockNotifications} />);
+    const button = screen.getByRole('button');
 
-test("checking if the right text is logged when the button is clicked", async () => {
-    render(<Notifications />)
-    const spy = jest.spyOn(console, 'log')
-    const btn = screen.getByRole("button")
-    const user = userEvent.setup()
-    await user.click(btn)
-    expect(spy).toHaveBeenCalledWith("Close button has been clicked")
-    spy.mockRestore()
-})
+    expect(button).toBeInTheDocument();
+  })
 
-test("checing if the component renders the 3 li tags", () => {
-    const mnotifications = [
-        {key: uuidv4(), type: "default", value: "New course available", html: undefined},
-        {key: uuidv4(), type: "urgent", value: "New resume available", html: undefined},
-        {key: uuidv4(), type: "urgent", value: "Urgent requirement - complete by EOD", html: undefined}
-    ]
+  test('Verify that there are 3 li elements as notifications rendered', () => {
+    render(<Notifications listNotifications={mockNotifications} />);
+    const lielements = screen.getAllByRole('listitem');
 
-    render(<Notifications notifications={mnotifications}/>)
-    const litag1 = screen.getByText("New course available")
-    const litag2 = screen.getByText("New resume available")
-    const litag3 = screen.getByText("Urgent requirement - complete by EOD")
-    expect(litag1).toBeInTheDocument()
-    expect(litag2).toBeInTheDocument()
-    expect(litag3).toBeInTheDocument()
+    expect(lielements.length).toBe(3);
+  })
+
+  test('Check whether clicking the close button logs Close button has been clicked to the console.', () => {
+    const consolelog = jest.spyOn(console, 'log');
+    render(<Notifications listNotifications={mockNotifications} />);
+    const button = screen.getByRole('button', { name: /close/i });
+
+    fireEvent.click(button);
+
+    expect(consolelog).toHaveBeenCalledWith('Close button has been clicked');
+  })
 })

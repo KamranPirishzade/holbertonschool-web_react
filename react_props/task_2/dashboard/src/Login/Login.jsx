@@ -1,19 +1,16 @@
-
-
 import './Login.css'
 
-function Login() {
+export default function Login() {
     return (
-        <>
-        <div className='App-body'><p>Login to access the full dashboard</p>
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" data-testid="email"></input>
-        <label htmlFor="pw">Password</label>
-        <input type="password" id="pw" data-testid="pw"></input>
-        <button data-testid="btn" type='submit'>OK</button>
-        </div>          
-        </>
+    <div className="App-body">
+        <p>Login to access the full dashboard</p>
+        <label htmlFor="email">Email:
+            <input id="email" type="email" />
+        </label>
+        <label htmlFor="password">Password:
+            <input id="password" type="password" />
+        </label>
+        <button>OK</button>
+    </div>
     )
 }
-
- export default Login

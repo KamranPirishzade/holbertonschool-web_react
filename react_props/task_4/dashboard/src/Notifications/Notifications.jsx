@@ -1,42 +1,44 @@
-import "./Notifications.css";
-import PropTypes from "prop-types";
-import NotificationItem from "./NotificationItem.jsx";
-import { v4 as uuid4 } from "uuid";
+import './Notifications.css'
+import closebtn from '../assets/close-button.png'
+import NotificationItem from './NotificationItem';
 
-function Notifications({ notifications = [] }) {
+export default function Notifications({ notifications }) {
   return (
     <>
       <div className="notifications">
-        <p role="paragraph">Here is the list of notifications</p>
+        <p>
+        Here is the list of notifications
+        </p>
         <button
-          aria-label="Close"
-          style={{ display: "inline" }}
-          onClick={() => {
-            console.log("Close button has been clicked");
+        style={{
+          position: "absolute",
+          display: "flex",
+          background: "none",
+          borderStyle: "none",
+          right: "1rem",
+          top: "0.8rem",
+          width: "0.5rem",
+          height: "0.5rem",
+        }}
+        onClick={() => console.log('Close button has been clicked')} aria-label="Close">
+          <img
+          style={{
+            width: "0.5rem",
+            height: "0.5rem",
           }}
-          type="button"
-        >
-          <img src="/src/assets/close-button.png" alt="close button" />
+          src={ closebtn } alt='CLose' />
         </button>
         <ul>
-          {notifications.map((obj) => {
-            return (
-              <NotificationItem
-                key={uuid4()}
-                type={obj.type}
-                value={obj.value}
-                html={obj.HTML}
-              />
-            );
-          })}
-        </ul>
+          {notifications.map((notification) => (
+            <NotificationItem
+            key={notification.id}
+            type={notification.type}
+            value={notification.value}
+            html={notification.html}
+            />
+          ))}
+          </ul>
       </div>
     </>
   );
 }
-
-Notifications.propTypes = {
-  notifications: PropTypes.array,
-};
-
-export default Notifications;

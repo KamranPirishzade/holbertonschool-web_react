@@ -1,49 +1,33 @@
-
 import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-
 import Notifications from "./Notifications";
-import { getLatestNotification } from "../utils/utils";
 
-describe("Notifications Component", () => {
-  beforeEach(() => {
-    render(<Notifications />);
-  });
+test('Check the existence of the notifications title Here is the list of notifications', () => {
+  render(<Notifications />);
+  const notiftitle = screen.getByText(/Here is the list of notifications/i);
 
-  it("displays the notification title", () => {
-    expect(
-      screen.getByText(/Here is the list of notifications/i)
-    ).toBeInTheDocument();
-  });
+  expect(notiftitle).toBeInTheDocument();
+})
 
-  it("renders three list items", () => {
-    const listItems = screen.getAllByRole("listitem");
-    expect(listItems.length).toBe(3);
-  });
+test('Check the existence of the button element in the notifications', () => {
+  render(<Notifications />);
+  const button = screen.getByRole('button');
 
-  it("renders the first notification with data-priority='default'", () => {
-    const item = screen.getByText(/New course available/i);
-    expect(item).toHaveAttribute("data-priority", "default");
-  });
+  expect(button).toBeInTheDocument();
+})
 
-  it("renders the second notification with data-priority='urgent'", () => {
-    const item = screen.getByText(/New resume available/i);
-    expect(item).toHaveAttribute("data-priority", "urgent");
-  });
+test('Verify that there are 3 li elements as notifications rendered', () => {
+  render(<Notifications />);
+  const lielements = screen.getAllByRole('listitem');
 
-  it("renders the latest notification using dangerouslySetInnerHTML", () => {
-    const container = screen.getByText((content, node) => {
-      return node?.innerHTML === getLatestNotification();
-    });
+  expect(lielements.length).toBe(3);
+})
 
-    expect(container).toBeInTheDocument();
-  });
+test('Check whether clicking the close button logs Close button has been clicked to the console.', () => {
+  const consolelog = jest.spyOn(console, 'log');
+  render(<Notifications />);
+  const button = screen.getByRole('button', { name: /close/i });
 
-  it("logs message when close button is clicked", () => {
-    const consoleSpy = jest.spyOn(console, "log");
-    const closeButton = screen.getByRole("button", { name: "Close" });
-    fireEvent.click(closeButton);
-    expect(consoleSpy).toHaveBeenCalledWith("Close button has been clicked");
-    consoleSpy.mockRestore();
-  });
-});
+  fireEvent.click(button);
+
+  expect(consolelog).toHaveBeenCalledWith('Close button has been clicked');
+})

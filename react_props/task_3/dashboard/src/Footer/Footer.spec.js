@@ -1,19 +1,21 @@
+import { render, screen } from "@testing-library/react";
+import { getCurrentYear, getFooterCopy } from "../utils/utils";
+import Footer from "./Footer";
 
-import {render, screen} from '@testing-library/react'
-import Footer from './Footer.jsx'
-import * as myModule from '../utils/utils.js'
+test('the text content within the 2 p elements in the app-body and app-footer divs matches', () => {
+  render(<Footer />);
+  const divfooter = screen.getByText(/Copyright 2025 - holberton School/i);
 
-describe("Footer component", () => {
-    it ("if the footer paragraph rendred", () => {
-        render(<Footer />)
-        const p = screen.getByText("Copyright 2025 - Holberton School main dashboard")
-        expect(p).toBeInTheDocument()
-    })
-    it("checking if the footer renderes the correct paragraph content when the argument of getFooterCopy is true", () => {
-        jest.spyOn(myModule, 'getFooterCopy').mockImplementation(() => 'Holberton School')
-        render(<Footer />)
-        const p = screen.getByText("Copyright 2025 - Holberton School")
-        expect(p).toBeInTheDocument()
-    })
-})
+  expect(divfooter).toBeInTheDocument();
+});
 
+test('renders correct footer content when isIndex is true', () => {
+  render(<Footer />);
+
+  const year = getCurrentYear();
+  const copy = getFooterCopy(true);
+  const expectedText = `Copyright ${year} - ${copy}`;
+
+  const footerText = screen.getByText(expectedText, { exact: false });
+  expect(footerText).toBeInTheDocument();
+});
