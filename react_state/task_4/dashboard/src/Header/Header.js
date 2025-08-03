@@ -1,67 +1,52 @@
-import React, { Component, Fragment } from 'react';
-import logo from '../assets/holberton_logo.jpg';
-import { StyleSheet, css } from 'aphrodite';
-import AppContext from '../App/AppContext';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react'
+import { StyleSheet, css } from 'aphrodite'
+import AppContext from '../App/AppContext'
+import logo from '../assets/logo.jpg'
 
-class Header extends Component {
 
-	static contextType = AppContext;
+export default function Header() {
+	const { user, logOut } = useContext(AppContext);
 
-	constructor(props) {
-		super(props);
-	};
-
-	render() {
-
-		const { user, logOut } = this.context;
-
+	if (!user.isLoggedIn) {
 		return (
-			<div className={css(styles.appHeader)}>
-				<img
-					src={logo}
-					alt="logo"
-				/>
-				<h1 className={css(styles.heading1)}>
-					School dashboard
-				</h1>
-				{
-					user.isLoggedIn &&
-					<section id="logoutSection">
-						<hr size="2" width="90%" />
-						Welcome <b>{user.email}</b> <a href="#" onClick={() => logOut()}>(logout)</a>
-					</section>
-				}
-			</div>
-		);
-	};
-};
+			<header className={css(headerStyles.appHeader)}>
+				<img src={logo} className={css(headerStyles.appLogo)} alt="logo" />
+				<h1>School dashboard</h1>
+			</header>
+		)
+	} else {
+		return (
+			<React.Fragment>
+				<header className={css(headerStyles.appHeader)}>
+					<img src={logo} className={css(headerStyles.appLogo)} alt="logo" />
+					<h1>School dashboard</h1>
+				</header>
+				<div className={css(headerStyles.greeting)} id="logoutSection">
+					<h2>Welcome
+						<strong> {user.email} </strong>
+						{/* if user clicks on logout button, calls logOut function in AppContext */}
+						<em><a href="#" onClick={logOut}>(logout)</a></em>
+					</h2>
+				</div>
+			</React.Fragment>
+		)
+	}
+}
 
-Header.propTypes = {
-	user: PropTypes.object,
-	logOut: PropTypes.func
-};
 
-Header.defaultProps = {
-	user: {
-		email: '',
-		password: '',
-		isLoggedIn: false,
-	},
-	logOut: () => this.logOut(),
-};
+const primaryColor = '#E11D3F';
 
-const styles = StyleSheet.create({
+const headerStyles = StyleSheet.create({
 	appHeader: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'left',
+		alignItems: 'center',
+		color: `${primaryColor}`,
+		borderBottom: `1px solid ${primaryColor}`,
 	},
-	heading1: {
-		margin: 'auto auto auto 0',
-		color: `var(--holberton-red)`,
-		// color: `var(${--holberton-red})`,
+
+	appLogo: {
+		height: '200px',
+		width: '200px'
 	},
 });
-
-export default Header;

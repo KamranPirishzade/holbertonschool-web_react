@@ -1,64 +1,61 @@
-import React from 'react';
-import { expect } from 'chai';
-import Adapter from 'enzyme-adapter-react-16';
-import { shallow, configure } from 'enzyme';
-import CourseListRow from './CourseListRow';
+import { shallow } from 'enzyme';
 import { StyleSheetTestUtils } from 'aphrodite';
+import React from 'react';
+import CourseListRow from './CourseListRow';
 
-configure({adapter: new Adapter()});
 
-describe("Testing the <CourseListRow /> Component", () => {
-
+// shallow render CourseListRow component
+describe('<CourseListRow />', () => {
 	beforeEach(() => {
 		StyleSheetTestUtils.suppressStyleInjection();
 	});
 
-	afterEach(() => {
-		StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+	it(`When isHeader is true, renders on cell with colspan=2
+	when textSecondCell does not exist`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" />);
+		expect(wrapper.find('th').exists()).toBe(true);
+	})
+
+	it(`When isHeader is true, renders two cells when textSecondCell is present`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" textSecondCell="test2" />);
+		expect(wrapper.find('th').length).toBe(2);
+	})
+
+	it(`When isHeader is false, renders two td elements within a tr element`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="test" textSecondCell="test2" />);
+		expect(wrapper.find('tr').length).toBe(1);
+		expect(wrapper.find('td').length).toBe(2);
+	})
+})
+
+// describe case for background_color
+describe('<CourseListRow />', () => {
+	beforeEach(() => {
+		StyleSheetTestUtils.suppressStyleInjection();
 	});
 
-	it("Test if it renders one cell with colSpan=2 when textSecondCell doesn't exist and isHeader is true", () => {
-		
-		let props = {
-			isHeader: true,
-			textFirstCell: 'dumbstring',
-		};
+	const row_background_color = { backgroundColor: '#f5f5f5ab' };
+	const header_row_background_color = { backgroundColor: '#deb5b545' };
 
-		let component = shallow(<CourseListRow {...props} />);
+	// test cases for ths
+	it(`When isHeader is true and textSecondCell does not exist, check for correct background color`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" />);
+		expect(wrapper.find('tr').props().style).toEqual(header_row_background_color);
+	})
 
-		expect(component.containsAllMatchingElements([<th colSpan={2}>{props.textFirstCell}</th>])).to.equal(true);
-	});
+	it(`When isHeader is true and textSecondcell DOES exist, check for correct background color`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" textSecondCell="test2" />);
+		expect(wrapper.find('tr').props().style).toEqual(header_row_background_color);
+	})
 
-	it("Test if it renders 2 cells when textSecondCell exists and isHeader is true", () => {
-		
-		let props = {
-			isHeader: true,
-			textFirstCell: 'dumbstring',
-			textSecondCell: 'dumbstring',
-		};
+	// test cases for tds
+	it(`When isHeader is false and textSecondCell does not exist, check for correct background color`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="test" />);
+		expect(wrapper.find('tr').props().style).toEqual(row_background_color);
+	})
 
-		let component = shallow(<CourseListRow {...props} />);
-
-		expect(component.containsAllMatchingElements([
-			<th>{props.textFirstCell}</th>,
-			<th>{props.textSecondCell}</th>
-		])).to.equal(true);
-	});
-
-	it("Test if it renders 2 <td> within a <tr> element when isHeader is false", () => {
-		
-		let props = {
-			isHeader: false,
-			textFirstCell: 'dumbstring',
-			textSecondCell: 'dumbstring',
-		};
-
-		let component = shallow(<CourseListRow {...props} />);
-
-		expect(component.containsAllMatchingElements([
-			<td>{props.textFirstCell}</td>,
-			<td>{props.textSecondCell}</td>
-		])).to.equal(true);
-	});
-
-});
+	it(`When isHeader is false and textSecondcell DOES exist, check for correct background color`, () => {
+		const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="test" textSecondCell="test2" />);
+		expect(wrapper.find('tr').props().style).toEqual(row_background_color);
+	})
+})

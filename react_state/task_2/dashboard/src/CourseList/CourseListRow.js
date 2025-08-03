@@ -1,74 +1,70 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 import { StyleSheet, css } from 'aphrodite';
+import propTypes from 'prop-types'
 
-class CourseListRow extends Component {
-	render() {
 
-		let {
-			isHeader,
-			textFirstCell,
-			textSecondCell,
-		} = this.props;
+const CourseListRow = ({ isHeader, textFirstCell, textSecondCell }) => {
+	// props:
+	// - isHeader: bool, default: false
+	// - textFirstCell: string, required
+	// - textSecondCell: string, default: null
+	const row_background_color = { backgroundColor: '#f5f5f5ab' };
+	const header_row_background_color = { backgroundColor: '#deb5b545' };
+	let node;
+	let style;
 
-		if (isHeader === true && textSecondCell == null) {
-			return (
-				<tr className={css(styles.headerRowBG)} >
-					<th className={css(styles.tableData)} colSpan={2}>
-						{textFirstCell}
-					</th>
-				</tr>
-			);
-		} else if (isHeader === true && textSecondCell != null) {
-			return (
-				<tr className={css(styles.rowBG)} >
-					<th className={css(styles.tableData)}>
-						{textFirstCell}
-					</th>
-					<th className={css(styles.tableData)}>
-						{textSecondCell}
-					</th>
-				</tr>
-			);
-		} else if (isHeader === false) {
-			return (
-				<tr className={css(styles.rowBG)} >
-					<td className={css(styles.tableData)}>
-						{textFirstCell}
-					</td>
-					<td className={css(styles.tableData)}>
-						{textSecondCell}
-					</td>
-				</tr>
-			);
+	if (isHeader) {
+		style = header_row_background_color;
+		if (!textSecondCell) {
+			node = <th colSpan="2" className={css(rowStyles.th)}>{textFirstCell}</th>;
+		} else {
+			node =
+				<React.Fragment>
+					<th className={css(rowStyles.NOTth)}>{textFirstCell}</th>
+					<th className={css(rowStyles.NOTth)}>{textSecondCell}</th>
+				</React.Fragment>;
 		}
+	} else {
+		style = row_background_color;
+		node =
+			<React.Fragment>
+				<td>{textFirstCell}</td>
+				<td>{textSecondCell}</td>
+			</React.Fragment>;
 	}
-};
+	return (
+		<tr style={style}>
+			{node}
+		</tr>
+	);
+}
 
-const styles = StyleSheet.create({
-	rowBG: {
-		backgroundColor: "#f5f5f5ab",
+const rowStyles = StyleSheet.create({
+	th: {
+		textAlign: 'center',
+		border: `1px solid`,
+		paddingBottom: `0.5rem`
 	},
-	headerRowBG: {
-		backgroundColor: "#deb5b545",
-	},
-	tableData: {
-		borderBottom: '2px solid lightgrey',
-	},
-});
 
-CourseListRow.propTypes = {
-	isHeader: PropTypes.bool,
-	textFirstCell: PropTypes.string.isRequired,
-	textSecondCell: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]),
-};
+	NOTth: {
+		textAlign: 'start',
+		borderBottom: `1px solid`,
+	}
+})
+
 
 CourseListRow.defaultProps = {
 	isHeader: false,
-	textSecondCell: null,
-};
+	textSecondCell: null
+}
 
-export default CourseListRow;
+CourseListRow.propTypes = {
+	isHeader: propTypes.bool,
+	textFirstCell: propTypes.string.isRequired,
+	textSecondCell: propTypes.oneOfType([
+		propTypes.string,
+		propTypes.number,
+	])
+}
+
+export default CourseListRow

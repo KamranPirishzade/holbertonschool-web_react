@@ -1,187 +1,150 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Header from '../Header/Header.js';
-import Login from '../Login/Login.js';
-import Footer from '../Footer/Footer.js';
-import Notifications from '../Notifications/Notifications.js';
-import CourseList from '../CourseList/CourseList';
-import { getLatestNotification } from '../utils/utils';
-import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom.js';
-import BodySection from '../BodySection/BodySection.js';
-import WithLogging from '../HOC/WithLogging.js';
-import { StyleSheet, css } from 'aphrodite';
-import AppContext from './AppContext';
+import React, { Component } from 'react'
+import { StyleSheet, css } from 'aphrodite'
+import { AppProvider } from './AppContext'
+import Notifications from '../Notifications/Notifications'
+import { getLatestNotification } from '../utils/utils'
+import Login from '../Login/Login'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
+import CourseList from '../CourseList/CourseList'
+import BodySection from '../BodySection/BodySection'
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom'
+
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayDrawer: false,
-      user: {
-        email: '',
-        password: '',
-        isLoggedIn: false,
-      },
-      logOut: () => this.logOut(),
-    };
-    this.ctrlHEventHandler = this.ctrlHEventHandler.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
-    this.logIn = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this);
-  };
+	constructor(props) {
+		super(props);
+		this.state = {
+			displayDrawer: false,
+			user: {
+				email: '',
+				password: '',
+				isLoggedIn: false
+			},
+			logOut: this.logOut
+		}
+	};
 
-  handleDisplayDrawer() {
-    this.setState({
-      displayDrawer: true,
-    });
-  };
 
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email: email,
-        password: password,
-        isLoggedIn: true,
-      },
-    });
-  };
+	componentDidMount() {
+		window.addEventListener('keydown', this.keyDownHandler);
+	}
 
-  logOut() {
-    let self = this;
-    self.setState({
-      user: {
-        email: '',
-        password: '',
-        isLoggedIn: false,
-      },
-    });
-  };
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.keyDownHandler);
+	}
 
-  handleHideDrawer() {
-    this.setState({
-      displayDrawer: false,
-    });
-  };
+	keyDownHandler = (e) => {
+		if (e.keyCode === 72 && e.ctrlKey) {
+			alert('Logging you out');
+			this.state.logOut();
+		}
+	}
 
-  ctrlHEventHandler(e) {
-    let k = e.key;
-    if ((e.metaKey || e.ctrlKey) && k === 'h') {
-      e.preventDefault();
-      alert('Logging you out');
-      this.logOut();
-    }
-  };
+	handleDisplayDrawer = () => {
+		this.setState({ displayDrawer: true })
+	}
 
-  handleKeyPressDown() {
-    document.addEventListener("keydown", this.ctrlHEventHandler, false);
-  };
+	handleHideDrawer = () => {
+		this.setState({ displayDrawer: false })
+	}
 
-  componentDidMount() {
-    this.handleKeyPressDown();
-  };
+	logIn = (email, password) => {
+		this.setState({
+			user: {
+				email,
+				password,
+				isLoggedIn: true
+			}
+		})
+	}
 
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.ctrlHEventHandler, false);
-  };
+	logOut = () => {
+		this.setState({
+			user: {
+				email: '',
+				password: '',
+				isLoggedIn: false
+			}
+		})
+	}
 
-  render() {
+	render() {
+		const { displayDrawer } = this.state;
 
-    let i = 0;
-    
-    let listNotifications = [
-      {
-        id: i++,
-        type: "default",
-        value: "New course available",
-      },
-      {
-        id: i++,
-        type: "urgent",
-        value: "New resume available",
-      },
-      {
-        id: i++,
-        type: "urgent",
-        html: {__html: getLatestNotification()},
-      }
-    ];
+		const listCourses = [
+			{ id: 1, name: 'ES6', credit: '60' },
+			{ id: 2, name: 'Webpack', credit: '20' },
+			{ id: 3, name: 'React', credit: '40' }
+		]
 
-    let listCourses = [
-      {
-        id: 1,
-        name: "ES6",
-        credit: 60,
-      },
-      {
-        id: 2,
-        name: "Webpack",
-        credit: 20,
-      },
-      {
-        id: 3,
-        name: "React",
-        credit: 40,
-      },
-    ];
+		const listNotifications = [
+			{ id: 1, type: "default", value: "New course available" },
+			{ id: 2, type: "urgent", value: "New resume available" },
+			{ id: 3, html: { __html: getLatestNotification() }, type: "urgent" }
+		]
 
-    let {
-      displayDrawer,
-      user,
-      logOut,
-    } = this.state;
+		return (
+			<AppProvider value={{
+				displayDrawer: displayDrawer,
+				handleDisplayDrawer: this.handleDisplayDrawer,
+				handleHideDrawer: this.handleHideDrawer,
+				user: this.state.user,
+				logIn: this.logIn,
+				logOut: this.logOut
+			}}>
+				<div className={css(bodyStyles.App)}>
+					<Notifications
+						listNotifications={listNotifications}
+						displayDrawer={displayDrawer}
+						handleDisplayDrawer={this.handleDisplayDrawer}
+						handleHideDrawer={this.handleHideDrawer}
+					/>
+					<Header />
+					<div className="App-body">
+						{this.state.user.isLoggedIn
+							?
+							<BodySectionWithMarginBottom title="Course list">
+								<CourseList listCourses={listCourses} />
+							</BodySectionWithMarginBottom>
+							:
+							<BodySectionWithMarginBottom title="Login in to continue">
+								<Login logIn={this.logIn} />
+							</BodySectionWithMarginBottom>
+						}
+						<BodySection title="News from the School"><p>Boring random text</p></BodySection>
+					</div>
+					<div className={css(footerStyles.Footer)}>
+						<Footer />
+					</div>
+				</div>
+			</AppProvider>
+		)
+	}
+}
 
-    return (
-      <AppContext.Provider value={{user, logOut}} >
-        <div className={css(styles.app)}>
-          <div className={css(styles.upperside)}>
-            <Notifications
-              listNotifications={listNotifications}
-              displayDrawer={displayDrawer}
-              handleDisplayDrawer={this.handleDisplayDrawer}
-              handleHideDrawer={this.handleHideDrawer}
-            />
-            <Header />
-          </div>
-          {
-            user.isLoggedIn === false &&
-            <BodySectionWithMarginBottom title="Log in to continue">
-              <Login logIn={this.logIn} />
-            </BodySectionWithMarginBottom>
-          }
-          {
-            user.isLoggedIn === true &&
-            <BodySectionWithMarginBottom title="Course list">
-              <CourseList listCourses={listCourses} />
-            </BodySectionWithMarginBottom>
-          }
-          <BodySection title="News from the school">
-            <p>
-              Labore ut consequat esse nostrud aute exercitation occaecat consequat ad cillum enim et est ex.
-               Qui proident veniam in aute magna occaecat.
-               Esse duis proident aliqua proident eu magna aliqua est exercitation.
-               Cupidatat ex eiusmod et commodo laborum veniam deserunt ad est excepteur cillum laborum.
-            </p>
-          </BodySection>
-          <Footer />
-        </div>
-      </AppContext.Provider>
-    );
-  };
-};
 
-const styles = StyleSheet.create({
-  app: {
-    position: 'relative',
-    minHeight: '100vh',
-  },
-  upperside: {
-    display: "flex",
-    flexDirection: "row-reverse",
-    width: "100%",
-    borderBottom: `3px solid var(--holberton-red)`,
-    justifyContent: "space-between",
-  }
+const primaryColor = '#E11D3F';
+
+const bodyStyles = StyleSheet.create({
+	App: {
+		backgroundColor: '#ffffff',
+		display: 'flex',
+		flexDirection: 'column',
+	}
 });
 
-export default App;
+const footerStyles = StyleSheet.create({
+	Footer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderTop: `3px solid ${primaryColor}`,
+		padding: '1rem',
+		fontStyle: 'italic',
+	}
+});
+
+
+export default App

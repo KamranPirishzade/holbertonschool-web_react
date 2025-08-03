@@ -1,91 +1,96 @@
+import { shallow, mount } from '../../config/setupTests';
+import { StyleSheetTestUtils } from 'aphrodite';
 import React from 'react';
-import { expect } from 'chai';
-import Adapter from 'enzyme-adapter-react-16';
-import { shallow, configure, mount } from 'enzyme';
 import Header from './Header';
-import { StyleSheetTestUtils, } from 'aphrodite';
 import AppContext from '../App/AppContext';
 
-configure({adapter: new Adapter()});
 
-describe("Testing the <Header /> Component", () => {
-	
-	let wrapper;
-
-	let context = {
-		user: {
-			email: 'messi@gmail.com',
-			password: '1234abcd',
-			isLoggedIn: true,
-		},
-		logOut: () => {},
-	};
-
+describe('<Header />', () => {
 	beforeEach(() => {
-		wrapper = mount(
-			<Header shouldRender />,
-			{ context: AppContext }
-		);
-
 		StyleSheetTestUtils.suppressStyleInjection();
 	});
 
 	afterEach(() => {
-		StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+		jest.clearAllMocks();
 	});
 
-	it("<Header /> is rendered without crashing", () => {
-		expect(wrapper.render()).to.not.be.an('undefined');
-	});
+	it('Tests that Header renders without crashing', () => {
+		const wrapper = shallow(<Header />);
+		wrapper.update();
+		expect(wrapper.exists()).toBe(true);
+	})
 
-	it("<Header /> render img tag", () => {
-		expect(wrapper.find('img')).to.have.lengthOf(1);
-	});
+	it('Tests that the component renders <img> and <h1> tags', () => {
+		const wrapper = shallow(<Header />);
+		wrapper.update();
+		expect(wrapper.exists('img')).toBe(true);
+		expect(wrapper.exists('h1')).toBe(true);
+	})
 
-	it("<Header /> render h1 tag", () => {
-		expect(wrapper.find('h1')).to.have.lengthOf(1);
-	});
-
-	it("Verify that the logoutSection is not created", () => {
-		expect(wrapper.find("#logoutSection")).to.have.lengthOf(0);
-	});
-
-	it("Verify that the logoutSection is created", () => {
-		let context = {
+	it(`Tests that logoutSection is not rendered with default context values`, () => {
+		const context = {
 			user: {
-				email: 'messi@gmail.com',
-				password: '1234abcd',
-				isLoggedIn: true,
+				email: '',
+				password: '',
+				isLoggedIn: false
 			},
-			logOut: () => {},
-		};
+			logOut: jest.fn()
+		}
 
-		let wrapperTwo = mount(
-			<Header />,
-			{ context: context }
-		);
-		expect(wrapperTwo.find("#logoutSection").at(0)).to.not.be.false;
-	});
+		const wrapper = mount(
+			<AppContext.Provider value={context}>
+				<Header />
+			</AppContext.Provider>
+		)
 
-	it("Verify that clicking on the link 'Logout' is calling the spy", () => {		
-		let context = {
+		expect(wrapper.find('#logoutSection').length).toBe(0);
+		expect(wrapper.find('#logoutSection').exists()).toBe(false);
+		wrapper.unmount();
+	})
+
+	it(`Tests that logoutSection is rendered with context values`, () => {
+		const context = {
 			user: {
-				email: 'messi@gmail.com',
-				password: '1234abcd',
-				isLoggedIn: true,
+				email: 'test@test.com',
+				password: '123',
+				isLoggedIn: true
 			},
-			logOut: () => {},
-		};
+			logOut: jest.fn()
+		}
 
-		let wrapperTwo = mount(
-			<Header />,
-			{ context: context }
-		);
+		const wrapper = mount(
+			<AppContext.Provider value={context}>
+				<Header />
+			</AppContext.Provider>
+		)
 
-		let spy = jest.spyOn(wrapperTwo.instance().context, "logOut");
+		expect(wrapper.find('#logoutSection').length).toBe(1);
+		expect(wrapper.find('#logoutSection').exists()).toBe(true);
+		wrapper.unmount();
+	})
 
-		// wrapperTwo.find('a').simulate('click');
-		// expect(spy).toBeCalled();
-	});
+	it(`Verifies that the logOut function is called when clicking on logOut link`, () => {
+		const context = {
+			user: {
+				email: 'test@test.com',
+				password: '123',
+				isLoggedIn: true
+			},
+			logOut: jest.fn()
+		}
 
+		const spy = jest.spyOn(context, 'logOut');
+
+		const wrapper = mount(
+			<AppContext.Provider value={context}>
+				<Header />
+			</AppContext.Provider>
+		)
+
+		wrapper.find('a').simulate('click');
+
+		expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalledTimes(1);
+		wrapper.unmount();
+	})
 });
