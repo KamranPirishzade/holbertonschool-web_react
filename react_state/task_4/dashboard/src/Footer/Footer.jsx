@@ -1,22 +1,33 @@
-import React from 'react';
-import { getFullYear, getFooterCopy } from '../utils/utils';
-import AppContext from '../App/AppContext'; // Düzgün path olduğundan əmin ol
+import React, { useContext } from "react";
+import { StyleSheet, css } from "aphrodite";
+import { getFullYear, getFooterCopy } from "../utils/utils"; // diqqət, getFullYear yox, getFullYear istifadə edin
+import AppContext from "../App/AppContext";
 
-class Footer extends React.Component {
-  render() {
-    return (
-      <footer>
-        <p>{`Copyright ${getFullYear()} - ${getFooterCopy(true)}`}</p>
-        {this.context.user.isLoggedIn ? (
-          <p id="contactUs">
-            <a>Contact us</a>
-          </p>
-        ) : null}
-      </footer>
-    );
-  }
+export default function Footer() {
+  const { user } = useContext(AppContext);
+
+  return (
+    <footer className={css(styles.footer)}>
+      <p>
+        Copyright {getFullYear()} - {getFooterCopy(true)}
+      </p>
+      {user.isLoggedIn && (
+        <p id="conctacUs">
+          <a>Contact us</a>
+        </p>
+      )}
+    </footer>
+  );
 }
 
-Footer.contextType = AppContext;
-
-export default Footer;
+const styles = StyleSheet.create({
+  footer: {
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
+    textAlign: "center",
+    fontStyle: "italic",
+    borderTop: "3px solid #e11d3f",
+    padding: "1rem 0",
+  },
+});
