@@ -1,52 +1,49 @@
-import React, { useContext } from 'react'
-import { StyleSheet, css } from 'aphrodite'
+import React from 'react';
+import logo from '../assets/holbertonlogo.jpg';
+import { StyleSheet, css } from 'aphrodite';
 import AppContext from '../App/AppContext'
-import logo from '../assets/logo.jpg'
 
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default function Header() {
-	const { user, logOut } = useContext(AppContext);
+  render() {
+    return (
+      <div className={css(style.appHeader)}>
+        <img src={logo} className={css(style.appLogo)} alt='logo' />
+        <h1 className={css(style.appHeaderH1)}>School dashboard</h1>
 
-	if (!user.isLoggedIn) {
-		return (
-			<header className={css(headerStyles.appHeader)}>
-				<img src={logo} className={css(headerStyles.appLogo)} alt="logo" />
-				<h1>School dashboard</h1>
-			</header>
-		)
-	} else {
-		return (
-			<React.Fragment>
-				<header className={css(headerStyles.appHeader)}>
-					<img src={logo} className={css(headerStyles.appLogo)} alt="logo" />
-					<h1>School dashboard</h1>
-				</header>
-				<div className={css(headerStyles.greeting)} id="logoutSection">
-					<h2>Welcome
-						<strong> {user.email} </strong>
-						{/* if user clicks on logout button, calls logOut function in AppContext */}
-						<em><a href="#" onClick={logOut}>(logout)</a></em>
-					</h2>
-				</div>
-			</React.Fragment>
-		)
-	}
+        { this.context.user.isLoggedIn ?
+          <p id="logoutSection" className={css(style.logOut)}>Welcome {this.context.user.email} (<span onClick={this.context.logOut}>logout</span>)</p>
+          :
+          <></>
+        }
+      </div>
+    );
+  }
 }
 
+Header.contextType = AppContext;
 
-const primaryColor = '#E11D3F';
-
-const headerStyles = StyleSheet.create({
-	appHeader: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		color: `${primaryColor}`,
-		borderBottom: `1px solid ${primaryColor}`,
-	},
-
-	appLogo: {
-		height: '200px',
-		width: '200px'
-	},
+const style = StyleSheet.create({
+  appHeader: {
+    backgroundColor: '#fff',
+    borderBottom: '3px solid #e1354b',
+  },
+  appLogo: {
+    width: '200px',
+    height: '200px',
+  },
+  appHeaderH1: {
+    display: 'inline',
+    position: 'relative',
+    top: '-6rem',
+    color: '#e1354b',
+  },
+  logOut: {
+    textAlign: 'end'
+  }
 });
+
+export default Header;

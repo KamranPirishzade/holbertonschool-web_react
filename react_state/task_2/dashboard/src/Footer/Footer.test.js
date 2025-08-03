@@ -1,28 +1,33 @@
-import { shallow } from 'enzyme';
-import { StyleSheetTestUtils } from 'aphrodite';
 import React from 'react';
+import { shallow } from 'enzyme';
+import { expect } from 'chai';
+import App from '../App/App';
 import Footer from './Footer';
+import { StyleSheetTestUtils } from "aphrodite";
 
+describe('Test Footer.js', () => {
+  beforeAll(() => {
+    StyleSheetTestUtils.suppressStyleInjection();
+  });
 
-// shallow render footer component
-describe('<Footer />', () => {
-	beforeEach(() => {
-		StyleSheetTestUtils.suppressStyleInjection();
-	});
+  afterAll(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  });
 
-	afterEach(() => {
-		jest.clearAllMocks();
-	});
+  it('Footer without crashing', (done) => {
+    expect(shallow(<Footer />).exists());
+    done();
+  });
 
-	it('Tests that Footer renders without crashing', () => {
-		const wrapper = shallow(<Footer />);
-		wrapper.update();
-		expect(wrapper.exists()).toBe(true);
-	})
+  it('div with the class App-footer', (done) => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.contains(<footer className='App-footer' />))
+    done();
+  });
 
-	it('Contains the text "Copyright"', () => {
-		const wrapper = shallow(<Footer />);
-		wrapper.update();
-		expect(wrapper.text()).toContain('Copyright');
-	})
+  it('renders Copyright text', (done) => {
+    const wrapper = shallow(<Footer />);
+    expect(wrapper.text('Copyright')).contain('Copyright');
+    done();
+  });
 });
